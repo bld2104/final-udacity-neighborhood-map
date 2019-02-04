@@ -1,5 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Udacity Neighborhood Map Project - Barbara Donnini
+===============================
 
+# Table of Contents
+
+* [Description](#description)
+* [Run the Application](#run-the-application)
+* [Contributing](#contributing)
+* [Code Dependencies](#dependencies-copyrights-and-apis)
+* [License](#license)
+* [Additional Information](#additional-information)
+
+# Description
+This project was created to meet the requirements for the final project of the Udacity Front-end Nanodegree, a neighborhood map. It is based on my favorite neighborhood outside of Philadelphia. The code was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
+# Run the Application
+- Ensure npm is installed.
+- Open a terminal.
+- Change directory (cd) to the directory "my-app" (this directory).
+- Type "npm start" and the application should open in the browser.
+
+# Contributing
+Contributions to this project will not be accepted.
+
+# Dependencies Copyrights and APIs
+This project uses the FourSquare API, and several Google Maps APIs.
+Also [this article](https://stackoverflow.com/questions/48493960/using-google-map-in-react-component/48494032#48494032) was used.
+
+# License
+There is no license for this project.
+
+
+# Additional Information
 ## Available Scripts
 
 In the project directory, you can run:
@@ -66,3 +98,6 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Note
+I accidentally did the majority of the original commits [here](https://github.com/bld2104/udacity-neighborhood-map), which is a different folder on my machine. This folder does contain the project but not directly so I couldn't submit ita nd had to switch to this repository halfway through. If you need to see previous commits, see [here](https://github.com/bld2104/udacity-neighborhood-map).
