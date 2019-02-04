@@ -1,0 +1,96 @@
+      html,
+      body {
+        font-family: Arial, sans-serif;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        height: 100%;
+        position: relative;
+      }
+      input {
+        font-size: 12px;
+      }
+      h1 {
+        color: #19a0db;
+        font-size: 38pt;
+        margin: 0 0 10px 0;
+        text-align: center;
+      }
+        h2 {
+        color: #e85113;
+        font-size: 32pt;
+        margin: 0 0 10px 0;
+        
+      }
+        h3 {
+        color: #efe934;
+        font-size: 24pt;
+        margin: 0 0 10px 0;
+        
+      }
+      h4{
+        color: #207C1A;
+        font-size: 14pt;
+        margin: 0 0 10px 0;
+        
+      }
+
+      p{
+        color: ;
+      }
+      #hide-listings,
+      #show-listings {
+        width: 48%;
+      }
+
+
+
+      /* ******************************************* */
+      /* Barb's custom CSS */
+      /* ******************************************* */
+
+      @media only screen and (min-width: 721px) {
+.options-box {
+        background: #fff;
+        overflow-y: scroll;
+        height: 100%;
+        position: absolute;
+        line-height: 35px;
+        padding: 10px 10px 30px 10px;
+        text-align: left;
+        width: 25%;
+      }
+
+            #map {
+        bottom:0px;
+        height: 100%;
+
+        position: absolute;
+        right: 0px;
+        width:75%;
+      }
+    }
+
+    @media only screen and (max-width: 720px) {
+.options-box {
+        background: #fff;
+        position: absolute;
+        top: 0;
+        overflow-y: scroll;
+        height: 50%;
+        line-height: 35px;
+        padding: 10px 10px 30px 10px;
+        text-align: left;
+        width: 100%;
+      }
+
+            #map {
+        bottom:0px;
+        height: 50%;
+width:100%;
+        position: absolute;
+        right: 0px;
+      }
+    }
