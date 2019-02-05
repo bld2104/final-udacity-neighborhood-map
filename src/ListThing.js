@@ -8,7 +8,8 @@ class ListThing extends Component {
   };
 
   static propTypes = {
-    locations: PropTypes.array.isRequired
+    locations: PropTypes.array.isRequired,
+    markers: PropTypes.array.isRequired
   };
 
   componentDidMount() {
@@ -48,6 +49,7 @@ class ListThing extends Component {
   // So it is three separate functions - one for extracting the address, one for the city, and one for the state
   // from the arrayListFinal item in state.
 
+
   getAddress(placeid) {
     for (var i = 0; i < this.state.arrayListFinal.length; i++) {
       if (this.state.arrayListFinal[i].id === placeid) {
@@ -72,6 +74,8 @@ class ListThing extends Component {
     }
   }
 
+
+
   // list out the locations to the left of the screen.
   render() {
     return (
@@ -88,6 +92,7 @@ class ListThing extends Component {
               <h4>
                 {this.getCity(place.id)}, {this.getState(place.id)}
               </h4>
+              <button id={"button"+place.id} >Select</button>
             </li>
           ))}
         </ul>

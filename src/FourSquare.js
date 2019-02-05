@@ -1,13 +1,61 @@
 import React, { Component } from "react";
-import { PropTypes } from "prop-types";
 import ListThing from "./ListThing.js";
 import "./style.css";
 
+
 // This component creates the map does most of the map filtering and actions.
 class MapThing extends Component {
+
+
   map;
+  originalMarkers = [];
   // Create a new blank array for all the listing markers.
-  markers = [];
+  state = {
+        listbuttonclicked: '',
+         locations: [
+      {
+        id: 0,
+        top: false,
+        description:
+          "A coeducational Roman Catholic college in the Chestnut Hill section of Philadelphia, Pennsylvania within the Archdiocese of Philadelphia.",
+        title: "Chestnut Hill College",
+        ll: { lat: 40.08442, lng: -75.22792 }
+      },
+      {
+        id: 1,
+        top: true,
+        description:
+          "This is Barb's second home. A newer Whole Foods in the Plymouth Meeting Mall complex.",
+        title: "Whole Foods Plymouth Meeting",
+        ll: { lat: 40.113899, lng: -75.285309 }
+      },
+      {
+        id: 2,
+        top: true,
+        description:
+          "Environmental education and conservation of largest privately-owned tract of land in Philadelphia.",
+        title: "The Schuylkill Center",
+        ll: { lat: 40.05886, lng: -75.24402 }
+      },
+      {
+        id: 3,
+        top: true,
+        description:
+          "Also known as the tree house, the Wissahickon Environmental Center provides environmental education to adults, children, and families, throughout Philadelphia and vicinity, through public and school and group programming.",
+        title: "Wissahickon Environmental Center",
+        ll: { lat: 40.08586, lng: -75.2307 }
+      },
+      {
+        id: 4,
+        top: false,
+        description:
+          "The Morris Arboretum of the University of Pennsylvania is the official arboretum of the Commonwealth of Pennsylvania.",
+        title: "The Morris Arboretum",
+        ll: { lat: 40.09033, lng: -75.22639 }
+      }
+    ],
+    markers: []
+  }
   // Apply styles to the map as suggested in the content.
   styles = [
     {
@@ -60,10 +108,12 @@ class MapThing extends Component {
     }
   ];
 
-  static propTypes = {
-    locations: PropTypes.array.isRequired
-  };
 
+
+gm_authFailure() { 
+      document.getElementById("errors").innerHTML =
+        "Error: The FourSquare API failed to load";
+        };
   //Load google maps using ReactJS.
   //Code reference from - https://stackoverflow.com/questions/48493960/using-google-map-in-react-component/48494032#48494032
   getGoogleMaps() {
@@ -86,6 +136,7 @@ class MapThing extends Component {
         script.async = true;
         script.defer = true;
         //Append the script to the HTML
+        
         document.body.appendChild(script);
       });
     }
@@ -98,7 +149,14 @@ class MapThing extends Component {
     this.getGoogleMaps();
   }
 
+
+
+
+
   componentDidMount() {
+
+document.getElementById('button0').addEventListener("click", this.changestate)
+
     this.getGoogleMaps().then(google => {
       var largeInfowindow = new google.maps.InfoWindow();
 
@@ -113,11 +171,11 @@ class MapThing extends Component {
           })
         : this.map;
 
-      var mylocations = this.props.locations;
+      var mylocations = this.state.locations;
       // loop through each location and create the markers.
       for (var i = 0; i < mylocations.length; i++) {
         // Get the position from the location array.
-        var position = this.props.locations[i].ll;
+        var position = this.state.locations[i].ll;
         var title = mylocations[i].title;
         var description = mylocations[i].description;
 
@@ -131,11 +189,12 @@ class MapThing extends Component {
           id: i
         });
         // Push the marker to our array of markers.
-        this.markers.push(marker);
+        this.originalMarkers.push(marker);
+        this.setState({markers: this.originalMarkers})
       }
       // Loop through the markers and add a click function that animates each one on click (and stops animation on second click)
-      for (var j = 0; j < this.markers.length; j++) {
-        this.markers[j].addListener("click", function() {
+      for (var j = 0; j < this.state.markers.length; j++) {
+        this.state.markers[j].addListener("click", function() {
           if (this.animation === null) {
             this.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -147,10 +206,18 @@ class MapThing extends Component {
             this.setAnimation(null);
           }
         });
-      }
 
-      for (var k = 0; k < this.markers.length; k++) {
-        this.markers[k].addListener("click", function() {
+
+}
+
+
+
+/*    document.getElementById("button0").addEventListener("click",function(e) {
+
+    });*/
+
+      for (var k = 0; k < this.state.markers.length; k++) {
+        this.state.markers[k].addListener("click", function() {
           if (largeInfowindow.marker !== this) {
             largeInfowindow.marker = this;
             largeInfowindow.setContent(
@@ -168,50 +235,55 @@ class MapThing extends Component {
               largeInfowindow.marker = null;
             });
           }
+
         });
       }
 
     });
+
+
   } //end componentDidMount
+
+
 
   updateLocations(event) {
     
     // This next part filters the markers and list based on the drop-down selection.
 
     if (event.target.value === "top") {
-      for (var i = 0; i < this.props.locations.length; i++) {
-        if (this.props.locations[i].top === true) {
-          this.markers[i].setMap(this.map);
+      for (var i = 0; i < this.state.locations.length; i++) {
+        if (this.state.locations[i].top === true) {
+          this.state.markers[i].setMap(this.map);
           document.getElementById(
-            "location" + this.props.locations[i].id
+            "location" + this.state.locations[i].id
           ).style.cssText = "display:block";
         } else {
-          this.markers[i].setMap(null);
+          this.state.markers[i].setMap(null);
           document.getElementById(
-            "location" + this.props.locations[i].id
+            "location" + this.state.locations[i].id
           ).style.cssText = "display:none";
         }
       }
     } else if (event.target.value === "bottom") {
-      for (var l = 0; l < this.props.locations.length; l++) {
-        if (this.props.locations[l].top === false) {
-          this.markers[l].setMap(this.map);
+      for (var l = 0; l < this.state.locations.length; l++) {
+        if (this.state.locations[l].top === false) {
+          this.state.markers[l].setMap(this.map);
           document.getElementById(
-            "location" + this.props.locations[l].id
+            "location" + this.state.locations[l].id
           ).style.cssText = "display:block";
         } else {
-          this.markers[l].setMap(null);
+          this.state.markers[l].setMap(null);
           document.getElementById(
-            "location" + this.props.locations[l].id
+            "location" + this.state.locations[l].id
           ).style.cssText = "display:none";
         }
       }
     } else {
-      for (var m = 0; m < this.props.locations.length; m++) {
+      for (var m = 0; m < this.state.locations.length; m++) {
         document.getElementById(
-          "location" + this.props.locations[m].id
+          "location" + this.state.locations[m].id
         ).style.cssText = "display:block";
-        this.markers[m].setMap(this.map);
+        this.state.markers[m].setMap(this.map);
       }
     }
   }
@@ -238,7 +310,7 @@ class MapThing extends Component {
               <option value="top">Top 3 Locations</option>
               <option value="bottom">Bottom 2 Locations</option>
             </select>
-            <ListThing locations={this.props.locations} />
+            <ListThing locations={this.state.locations} markers={this.state.markers}/>
           </div>
         </div>
         <div id="map" />
