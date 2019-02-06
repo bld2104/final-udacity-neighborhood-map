@@ -11,6 +11,8 @@ class MapThing extends Component {
   originalMarkers = [];
   // Create a new blank array for all the listing markers.
   state = {
+    currentmarker: '',
+    marked: '',
         listbuttonclicked: '',
          locations: [
       {
@@ -107,7 +109,6 @@ class MapThing extends Component {
       stylers: [{ color: "#efe9e4" }, { lightness: -25 }]
     }
   ];
-
 
 
 gm_authFailure() { 
@@ -245,7 +246,29 @@ document.getElementById('button0').addEventListener("click", this.changestate)
   } //end componentDidMount
 
 
+listclick(clickedlocation, clickeddescription){
+  this.setState({ marked: clickedlocation }); 
+  console.log(clickedlocation);
+  console.log( clickeddescription);
+ this.getGoogleMaps().then(google => {
+          var largeInfowindow = new google.maps.InfoWindow();
+            largeInfowindow.marker = this;
+            largeInfowindow.setContent(
+              "<div>" +
+                clickedlocation +
+                "</div><div>" +
+                clickeddescription +
+                "</div>"
+            );
+            largeInfowindow.open(this.map, this);
+            // Make sure the marker property is cleared if the infowindow is closed.
+            largeInfowindow.addListener("closeclick", function() {
+              largeInfowindow.marker = null;
+            });
 
+          });
+
+}
   updateLocations(event) {
     
     // This next part filters the markers and list based on the drop-down selection.
@@ -286,9 +309,24 @@ document.getElementById('button0').addEventListener("click", this.changestate)
         this.state.markers[m].setMap(this.map);
       }
     }
+
+  }
+
+  updateList(){
+    this.state.locations.forEach((location, i) => {
+      //Location was clicked on locations list
+      if (this.state.marked === location.title) {
+        console.log(this.state.markers[i])
+        this.state.markers[i].setAnimation(window.google.maps.Animation.BOUNCE);
+        
+        new window.google.maps.event.trigger(this.state.markers[i], 'click');
+      }
+      
+    });
   }
 
   render() {
+    this.updateList();
     return (
       <div>
         <div className="options-box">
@@ -310,7 +348,8 @@ document.getElementById('button0').addEventListener("click", this.changestate)
               <option value="top">Top 3 Locations</option>
               <option value="bottom">Bottom 2 Locations</option>
             </select>
-            <ListThing locations={this.state.locations} markers={this.state.markers}/>
+            <ListThing locations={this.state.locations} markers={this.state.markers} onClickLocation={(location, description) => { this.listclick(location, description);}}/>
+            
           </div>
         </div>
         <div id="map" />

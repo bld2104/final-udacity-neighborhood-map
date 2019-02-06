@@ -38,6 +38,10 @@
  #hide-listings, #show-listings {
      width: 48%;
 }
+
+.foursquareerror2{
+  display:none;
+}
 /* ******************************************* */
 /* Barb's custom CSS */
 /* ******************************************* */

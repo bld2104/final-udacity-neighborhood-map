@@ -9,13 +9,14 @@ class ListThing extends Component {
 
   static propTypes = {
     locations: PropTypes.array.isRequired,
-    markers: PropTypes.array.isRequired
+    markers: PropTypes.array.isRequired,
+    onClickLocation: PropTypes.func.isRequired
   };
-
+ 
   componentDidMount() {
     var arrayList = [];
 
-    try {
+    
       // This calls the FourSquare API to get the addresses of the five locations in the locations list.
       this.props.locations.forEach((location, i) => {
         fetch(
@@ -37,12 +38,16 @@ class ListThing extends Component {
               state: data.response.venues[0].location.state
             });
             this.setState({ arrayListFinal: arrayList });
-          });
+          }).catch(err => {
+            console.log(err);
+            for(var i = 0; i < 5; i++){
+             document.getElementsByClassName("foursquareerror1")[i].style.cssText = "display:none"; 
+             document.getElementsByClassName("foursquareerror2")[i].style.cssText = "display:block"; 
+           }
+    
+          });;
       });
-    } catch (err) {
-      document.getElementById("errors").innerHTML =
-        "Error: The FourSquare API failed to load";
-    }
+    
   }
 
   // Could this have been done more efficiently? Yes. I ran out of time though!
@@ -80,19 +85,26 @@ class ListThing extends Component {
   render() {
     return (
       <div>
-        <ul id="locations-list" tabIndex="0" aria-label="Locations List">
+        <ul id="locations-list" aria-label="Locations List">
           {this.props.locations.map(place => (
-            <li key={place.id} id={"location" + place.id}>
+            <li tabIndex="0" key={place.id} id={"location" + place.id}>
               <h3>{place.title} </h3>
               <p>{place.description}</p>
               <h4>
                 <strong>Address from FourSquare:</strong>
               </h4>
-              <h4>{this.getAddress(place.id)}</h4>
-              <h4>
-                {this.getCity(place.id)}, {this.getState(place.id)}
-              </h4>
-              <button id={"button"+place.id} >Select</button>
+            <h4>  {this.getAddress(place.id)}</h4>
+              
+          <div
+            className="foursquareerror1">
+
+               <h4> {this.getCity(place.id)}, {this.getState(place.id)}</h4>
+               </div>
+              <div className="foursquareerror2">
+              <h4>Error: The FourSquare API failed to load</h4>
+              </div>
+        
+              <button id={"button"+place.id} onClick={() => this.props.onClickLocation(place.title, place.description)}>Select</button>
             </li>
           ))}
         </ul>
