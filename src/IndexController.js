@@ -1,4 +1,4 @@
-console.log('top of indexcontroller file');
+/*console.log('top of indexcontroller file');
 
 if ('serviceWorker' in navigator) {
 console.log('inside if');	
@@ -9,4 +9,4 @@ console.log('inside if');
 	.catch(function() {
 		console.log('Registration failed!');
 	});
-}
+}*/

@@ -111,10 +111,7 @@ class MapThing extends Component {
   ];
 
 
-gm_authFailure() { 
-      document.getElementById("errors").innerHTML =
-        "Error: The FourSquare API failed to load";
-        };
+
   //Load google maps using ReactJS.
   //Code reference from - https://stackoverflow.com/questions/48493960/using-google-map-in-react-component/48494032#48494032
   getGoogleMaps() {
@@ -198,11 +195,8 @@ document.getElementById('button0').addEventListener("click", this.changestate)
         this.state.markers[j].addListener("click", function() {
           if (this.animation === null) {
             this.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(() => this.setAnimation(null), 1000);
 
-            //I couldn't get this working but don't think it's required per the rubric.
-            /*setTimeout(function() {
-        this.markers[i].setAnimation(null)
-    }, 3000);*/
           } else {
             this.setAnimation(null);
           }
@@ -213,9 +207,7 @@ document.getElementById('button0').addEventListener("click", this.changestate)
 
 
 
-/*    document.getElementById("button0").addEventListener("click",function(e) {
 
-    });*/
 
       for (var k = 0; k < this.state.markers.length; k++) {
         this.state.markers[k].addListener("click", function() {
@@ -250,23 +242,6 @@ listclick(clickedlocation, clickeddescription){
   this.setState({ marked: clickedlocation }); 
   console.log(clickedlocation);
   console.log( clickeddescription);
- this.getGoogleMaps().then(google => {
-          var largeInfowindow = new google.maps.InfoWindow();
-            largeInfowindow.marker = this;
-            largeInfowindow.setContent(
-              "<div>" +
-                clickedlocation +
-                "</div><div>" +
-                clickeddescription +
-                "</div>"
-            );
-            largeInfowindow.open(this.map, this);
-            // Make sure the marker property is cleared if the infowindow is closed.
-            largeInfowindow.addListener("closeclick", function() {
-              largeInfowindow.marker = null;
-            });
-
-          });
 
 }
   updateLocations(event) {
@@ -316,9 +291,7 @@ listclick(clickedlocation, clickeddescription){
     this.state.locations.forEach((location, i) => {
       //Location was clicked on locations list
       if (this.state.marked === location.title) {
-        console.log(this.state.markers[i])
-        this.state.markers[i].setAnimation(window.google.maps.Animation.BOUNCE);
-        
+        /*this.state.markers[i].setAnimation(window.google.maps.Animation.BOUNCE);*/
         new window.google.maps.event.trigger(this.state.markers[i], 'click');
       }
       

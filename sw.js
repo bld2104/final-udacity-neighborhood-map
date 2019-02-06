@@ -1,4 +1,4 @@
-console.log('top of sw file');
+/*console.log('top of sw file');
 
 // Set a name for the current cache
 var cacheName = 'v1'; 
@@ -99,4 +99,4 @@ self.addEventListener('fetch', function(e) {
 
 			}) // end caches.match(e.request)
 	); // end e.respondWith
-});
+});*/

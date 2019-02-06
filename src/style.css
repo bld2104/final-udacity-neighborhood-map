@@ -42,6 +42,13 @@
 .foursquareerror2{
   display:none;
 }
+
+#errors{
+  color:red;
+  background-color:lightgray;
+  border-radius:15px;
+  text-align:center;
+}
 /* ******************************************* */
 /* Barb's custom CSS */
 /* ******************************************* */

@@ -19,6 +19,7 @@ This project was created to meet the requirements for the final project of the U
 - Open a terminal.
 - Change directory (cd) to the directory "my-app" (this directory).
 - Type "npm start" and the application should open in the browser.
+- Please run the application in production mode to take advantage of React's [default service worker](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app).
 
 # Contributing
 Contributions to this project will not be accepted.
